@@ -31,17 +31,13 @@ TEST(TVector, can_create_copied_vector)
 
 TEST(TVector, copied_vector_is_equal_to_source_one)
 {
-	TVector<int> v1(5);//
-	v1[2] = 3;
-	TVector<int> v2(v1);
-	EXPECT_TRUE(v2 == v1);
+	TVector<int> v1(5), v2(v1);//
+	EXPECT_EQ(v1, v2);
 }
 
 TEST(TVector, copied_vector_has_its_own_memory)
 {
-	TVector<int> v1(5);//
-	v1[2] = 3;
-	TVector<int> v2(v1);
+	TVector<int> v1(5), v2(v1);//
 	EXPECT_NE(&v1, &v2);
 }
 
@@ -62,9 +58,7 @@ TEST(TVector, can_get_start_index)
 TEST(TVector, can_set_and_get_element)
 {
   TVector<int> v(4);
-  v[0] = 4;
-
-  EXPECT_EQ(4, v[0]);
+  ASSERT_NO_THROW(v[1] = v[3]);
 }
 
 TEST(TVector, throws_when_set_element_with_negative_index)
@@ -93,21 +87,20 @@ TEST(TVector, can_assign_vectors_of_equal_size)
 
 TEST(TVector, assign_operator_change_vector_size)
 {
-	TVector<int> v1(4), v2;//
-	v2 = v1;
-	EXPECT_TRUE(v2.GetSize() == v1.GetSize());
+	TVector<int> v(4);//
+	v = TVector<int>(5);
+	EXPECT_EQ(v.GetSize(), 5);
 }
 
 TEST(TVector, can_assign_vectors_of_different_size)
 {
-	TVector<int> v1(4), v2(10);//
+	TVector<int> v1(4), v2(5);//
 	ASSERT_NO_THROW(v1 = v2);
 }
 
 TEST(TVector, compare_equal_vectors_return_true)
 {
-	TVector<int> v1(5);//
-	TVector<int> v2 = v1;
+	TVector<int> v1(5), v2(v1);//
 	EXPECT_TRUE(v2 == v1);
 }
 
@@ -119,7 +112,7 @@ TEST(TVector, compare_vector_with_itself_return_true)
 
 TEST(TVector, vectors_with_different_size_are_not_equal)
 {
-	TVector<int> v1(5), v2(10);//
+	TVector<int> v1(4), v2(5);//
 	EXPECT_TRUE(v1 != v2);
 }
 
@@ -149,7 +142,7 @@ TEST(TVector, can_add_vectors_with_equal_size)
 
 TEST(TVector, cant_add_vectors_with_not_equal_size)
 {
-	TVector<int> v1(4), v2(10);//
+	TVector<int> v1(4), v2(5);//
 	ASSERT_ANY_THROW(v1 + v2);
 }
 
@@ -161,7 +154,7 @@ TEST(TVector, can_subtract_vectors_with_equal_size)
 
 TEST(TVector, cant_subtract_vectors_with_not_equal_size)
 {
-	TVector<int> v1(4), v2(10);//
+	TVector<int> v1(4), v2(5);//
 	ASSERT_ANY_THROW(v1 - v2);
 }
 
@@ -173,7 +166,7 @@ TEST(TVector, can_multiply_vectors_with_equal_size)
 
 TEST(TVector, cant_multiply_vectors_with_not_equal_size)
 {
-	TVector<int> v1(4), v2(10);//
+	TVector<int> v1(4), v2(5);//
 	ASSERT_ANY_THROW(v1 * v2);
 }
 

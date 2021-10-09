@@ -26,10 +26,8 @@ TEST(TMatrix, can_create_copied_matrix)
 
 TEST(TMatrix, copied_matrix_is_equal_to_source_one)
 {
-	TMatrix<int> m1(5);//
-	m1[2][2] = 5;
-	TMatrix<int> m2(m1);
-	EXPECT_TRUE(m1 == m1);
+	TMatrix<int> m1(5), m2(m1);//
+	EXPECT_EQ(m1, m1);
 }
 
 TEST(TMatrix, copied_matrix_has_its_own_memory)
@@ -78,7 +76,7 @@ TEST(TMatrix, assign_operator_change_matrix_size)
 {
 	TMatrix<int> m1(5), m2(10);//
 	m1 = m2;
-	EXPECT_TRUE(m1.GetSize() == m2.GetSize());
+	EXPECT_EQ(m1.GetSize(), 10);
 }
 
 TEST(TMatrix, can_assign_matrices_of_different_size)
@@ -89,7 +87,7 @@ TEST(TMatrix, can_assign_matrices_of_different_size)
 
 TEST(TMatrix, compare_equal_matrices_return_true)
 {
-	TMatrix<int> m1(5), m2 = m1;//
+	TMatrix<int> m1(5), m2(m1);//
 	EXPECT_TRUE(m1 == m2);
 }
 
