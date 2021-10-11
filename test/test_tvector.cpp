@@ -37,6 +37,7 @@ TEST(TVector, copied_vector_is_equal_to_source_one)
 		source[i] = i;
 	}
 	TVector<int> copy(source);
+
 	EXPECT_EQ(source,copy);
 }
 
@@ -50,9 +51,9 @@ TEST(TVector, copied_vector_has_its_own_memory)
 
 TEST(TVector, can_get_size)
 {
-  TVector<int> v(4);
+	TVector<int> v(4);
 
-  EXPECT_EQ(4, v.GetSize());
+	EXPECT_EQ(4, v.GetSize());
 }
 
 TEST(TVector, can_get_start_index)
@@ -87,6 +88,7 @@ TEST(TVector, throws_when_set_element_with_too_large_index)
 TEST(TVector, can_assign_vector_to_itself)
 {
 	TVector<int> v(3);
+
 	ASSERT_NO_THROW(v = v);
 }
 
@@ -101,8 +103,7 @@ TEST(TVector, can_assign_vectors_of_equal_size)
 	}
 	v2 = v1;
 
-	EXPECT_EQ(1, v2[1]);
-	EXPECT_EQ(2, v2[2]);
+	EXPECT_EQ(v2, v1);
 }
 
 TEST(TVector, assign_operator_change_vector_size)
@@ -128,8 +129,7 @@ TEST(TVector, can_assign_vectors_of_different_size)
 	}
 	v2 = v1;
 
-	EXPECT_EQ(1, v2[1]);
-	EXPECT_EQ(4, v2[4]);
+	EXPECT_EQ(v2, v1);
 }
 
 TEST(TVector, compare_equal_vectors_return_true)
