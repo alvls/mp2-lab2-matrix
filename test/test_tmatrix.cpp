@@ -20,7 +20,6 @@ TEST(TMatrix, throws_when_create_matrix_with_negative_length)
 TEST(TMatrix, can_create_copied_matrix)
 {
   TMatrix<int> m(5);
-
   ASSERT_NO_THROW(TMatrix<int> m1(m));
 }
 
@@ -63,8 +62,7 @@ TEST(TMatrix, throws_when_set_element_with_negative_index)
 TEST(TMatrix, throws_when_set_element_with_too_large_index)
 {
 	TMatrix<int> m(3);
-	TVector<int> t(0);
-	ASSERT_ANY_THROW(m[3] = t);
+	ASSERT_ANY_THROW(m[3]);
 }
 
 TEST(TMatrix, can_assign_matrix_to_itself)
@@ -81,78 +79,78 @@ TEST(TMatrix, can_assign_matrices_of_equal_size)
 	m1 = m;
 	EXPECT_EQ(m, m1);
 }
-//
-//TEST(TMatrix, assign_operator_change_matrix_size)
-//{
-//	TMatrix<int> m(3);
-//	TMatrix<int> m1(4);
-//	m1 = m;
-//	EXPECT_EQ(m.GetSize(), m1.GetSize());
-//}
-//
-//TEST(TMatrix, can_assign_matrices_of_different_size)
-//{
-//	TMatrix<int> m(3);
-//	TMatrix<int> m1(4);
-//	ASSERT_NO_THROW(m1 = m);
-//}
-//
-//TEST(TMatrix, compare_equal_matrices_return_true)
-//{
-//	TMatrix<int> m(3);
-//	TMatrix<int> m1(m);
-//	EXPECT_EQ(true, m1 == m);
-//}
-//
-//TEST(TMatrix, compare_matrix_with_itself_return_true)
-//{
-//	TMatrix<int> m(3); 
-//	EXPECT_EQ(true, m == m);
-//}
-//
-//TEST(TMatrix, matrices_with_different_size_are_not_equal)
-//{
-//	TMatrix<int> m(3);
-//	TMatrix<int> m1(4);
-//	EXPECT_EQ(false, m1 == m);
-//}
-//
-//TEST(TMatrix, can_add_matrices_with_equal_size)
-//{
-//	TMatrix<int> m(3);
-//	TMatrix<int> m1(3);
-//	for (int i = 0; i < 3; i++)
-//		m1[i][i] += 8;
-//	TMatrix<int> standart(m);
-//	for (int i = 0; i < 3; i++)
-//		standart[i] = m1[i] + standart[i];
-//	EXPECT_EQ(standart, (m + m1));
-//}
-//
-//TEST(TMatrix, cant_add_matrices_with_not_equal_size)
-//{
-//	TMatrix<int> m(3);
-//	TMatrix<int> m1(4);
-//	ASSERT_ANY_THROW(m + m1);
-//}
-//
-//TEST(TMatrix, can_subtract_matrices_with_equal_size)
-//{
-//	TMatrix<int> m(3);
-//	TMatrix<int> m1(3);
-//	for (int i = 0; i < 3; i++)
-//		for (int j = 0; j < 3; j++)
-//			m1[i][j] += 1 + 3 * i - 2 * j;
-//	TMatrix<int> standart(m);
-//	for (int i = 0; i < 3; i++)
-//		standart[i] = m1[i] - standart[i];
-//	EXPECT_EQ(standart, (m1 - m));
-//}
-//
-//TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
-//{
-//	TMatrix<int> m(3);
-//	TMatrix<int> m1(4);
-//	ASSERT_ANY_THROW(m1 - m);
-//}
+
+TEST(TMatrix, assign_operator_change_matrix_size)
+{
+	TMatrix<int> m(3);
+	TMatrix<int> m1(4);
+	m1 = m;
+	EXPECT_EQ(m.GetSize(), m1.GetSize());
+}
+
+TEST(TMatrix, can_assign_matrices_of_different_size)
+{
+	TMatrix<int> m(3);
+	TMatrix<int> m1(4);
+	ASSERT_NO_THROW(m1 = m);
+}
+
+TEST(TMatrix, compare_equal_matrices_return_true)
+{
+	TMatrix<int> m(3);
+	TMatrix<int> m1(m);
+	EXPECT_EQ(true, m1 == m);
+}
+
+TEST(TMatrix, compare_matrix_with_itself_return_true)
+{
+	TMatrix<int> m(3); 
+	EXPECT_EQ(true, m == m);
+}
+
+TEST(TMatrix, matrices_with_different_size_are_not_equal)
+{
+	TMatrix<int> m(3);
+	TMatrix<int> m1(4);
+	EXPECT_EQ(false, m1 == m);
+}
+
+TEST(TMatrix, can_add_matrices_with_equal_size)
+{
+	TMatrix<int> m(3);
+	TMatrix<int> m1(3);
+	for (int i = 0; i < 3; i++)
+		m1[i][i] += 8;
+	TMatrix<int> standart(m);
+	for (int i = 0; i < 3; i++)
+		standart[i] = m1[i] + standart[i];
+	EXPECT_EQ(standart, (m1 + m));
+}
+
+TEST(TMatrix, cant_add_matrices_with_not_equal_size)
+{
+	TMatrix<int> m(3);
+	TMatrix<int> m1(4);
+	ASSERT_ANY_THROW(m + m1);
+}
+
+TEST(TMatrix, can_subtract_matrices_with_equal_size)
+{
+	TMatrix<int> m(3);
+	TMatrix<int> m1(3);
+	for (int i = 0; i < 3; i++)
+		for (int j = i; j < 3 - i; j++)
+			m1[i][j] = 1 + i - j;
+	TMatrix<int> standart(m);
+	for (int i = 0; i < 3; i++)
+		standart[i] = m1[i] - standart[i];
+	EXPECT_EQ(standart, (m1 - m));
+}
+
+TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
+{
+	TMatrix<int> m(3);
+	TMatrix<int> m1(4);
+	ASSERT_ANY_THROW(m1 - m);
+}
 

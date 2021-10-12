@@ -63,7 +63,7 @@ public:
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
-    if (s < 0 || s >= MAX_VECTOR_SIZE)
+    if (s < 0 || s > MAX_VECTOR_SIZE)
         throw - 1;
     if (si < 0 || si >= s)
         throw - 1;
@@ -89,9 +89,10 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
-    if (pos<0 || pos>Size)
+    int i = pos - StartIndex;
+    if (i<0 || i>=Size)
         throw - 1;
-    return pVector[pos];
+    return pVector[i];
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
@@ -242,33 +243,36 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 {
-    if (s < 0 || s >= MAX_MATRIX_SIZE)
+    if (s < 0 || s > MAX_MATRIX_SIZE)
         throw - 1;
-    for (int i = 0; i < s; i++)
+    Size = s;
+    StartIndex = 0;
+    for (int i = 0; i < Size; i++)
     {
-        TVector<ValType> tmp(s - i);
+        pVector[i] = TVector<ValType>(Size - i, i);
     }
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // конструктор копирования
 TMatrix<ValType>::TMatrix(const TMatrix<ValType> &mt):
-  TVector<TVector<ValType> >() 
+  TVector<TVector<ValType> >(mt) 
 {
-    Size = mt.Size;
-    std::copy(mt.pVector, mt.pVector + mt.Size, pVector);
 }
 
 template <class ValType> // конструктор преобразования типа
 TMatrix<ValType>::TMatrix(const TVector<TVector<ValType> > &mt):
   TVector<TVector<ValType> >(mt) 
 {
-    Size = mt.Size;
-    std::copy(mt.pVector, mt.pVector + mt.Size, pVector);
+
 }
 
 template <class ValType> // сравнение
 bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
 {
+    if (&mt == this)
+        return true;
+    if (Size != mt.Size)
+        return false;
     for (int i = 0; i < Size; i++)
         if (pVector[i] != mt.pVector[i])
             return false;
@@ -288,9 +292,12 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
         return *this;
     if (Size != mt.Size)
     {
-        TMatrix tmp(mt);
-        std::copy(tmp.pVector, tmp.pVector + Size, pVector);
+        Size = mt.Size;
+        delete[] pVector;
+        pVector = new TVector<ValType>[Size];
     }
+    StartIndex = mt.StartIndex;
+    std::copy(mt.pVector, mt.pVector + Size, pVector);
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сложение

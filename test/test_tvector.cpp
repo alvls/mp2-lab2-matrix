@@ -4,6 +4,18 @@
 
 TEST(TVector, can_create_vector_with_positive_length)
 {
+	try 
+	{
+		TVector<int> v(5);
+	}
+	catch (int)
+	{
+		cout << "int\n";
+	}
+	catch (...)
+	{
+		cout << "any\n";
+	}
   ASSERT_NO_THROW(TVector<int> v(5));
 }
 
@@ -79,7 +91,7 @@ TEST(TVector, throws_when_set_element_with_negative_index)
 TEST(TVector, throws_when_set_element_with_too_large_index)
 {
 	TVector<int>v(12);
-	ASSERT_ANY_THROW(v[13] = 3);
+	ASSERT_ANY_THROW(v[13]);
 }
 
 TEST(TVector, can_assign_vector_to_itself)
