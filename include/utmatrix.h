@@ -65,54 +65,50 @@ public:
 template <class ValType>
 TVector<ValType>::TVector(int s, int si) : Size(s), StartIndex(si)
 {
-    if((s < 0) || (s > MAX_VECTOR_SIZE) || (si < 0))
-      throw string("Wrong arguments");
-    pVector = new ValType[s];
-    for(int i = 0; i < s; i++)
-      pVector[i] = 0;
+  if((s < 0) || (s > MAX_VECTOR_SIZE) || (si < 0))
+    throw string("Wrong arguments");
+  pVector = new ValType[s]{};
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> //конструктор копирования
 TVector<ValType>::TVector(const TVector<ValType> &v)
 {
-    Size = v.Size;
-    StartIndex = v.StartIndex;
-    pVector = new ValType [Size];
-    for(int i = 0; i < Size; i++)
-      pVector[i] = v.pVector[i];
+  Size = v.Size;
+  StartIndex = v.StartIndex;
+  pVector = new ValType [Size];
+  for(int i = 0; i < Size; i++)
+    pVector[i] = v.pVector[i];
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType>
 TVector<ValType>::~TVector()
 {
-    delete [] pVector; 
+  delete [] pVector; 
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
-    pos -= StartIndex;
-    if((pos < 0) || (pos >= Size))
-      throw string("Wrong argument");
-    return pVector[pos];
-
-
+  pos -= StartIndex;
+  if((pos < 0) || (pos >= Size))
+    throw string("Wrong argument");
+  return pVector[pos];
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
 bool TVector<ValType>::operator==(const TVector &v) const
 {
-    if(this == &v)
-      return true;
-    if(Size != v.Size)
-      return false;
-    if(StartIndex != v.StartIndex)
-      return false;
-    for(int i = 0; i < Size; i++){
-      if(pVector[i] != v.pVector[i])
-        return false;
-    }
+  if(this == &v)
     return true;
+  if(Size != v.Size)
+    return false;
+  if(StartIndex != v.StartIndex)
+    return false;
+  for(int i = 0; i < Size; i++){
+    if(pVector[i] != v.pVector[i])
+      return false;
+  }
+  return true;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
@@ -124,16 +120,18 @@ bool TVector<ValType>::operator!=(const TVector &v) const
 template <class ValType> // присваивание
 TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 {
-    if(this == &v)
-      return *this;
+  if(this == &v)
+    return *this;
+  if(Size != v.Size){
     ValType *tmp = new ValType [v.Size];
     delete [] pVector;
     pVector = tmp;
     Size = v.Size;
-    StartIndex = v.StartIndex;
-    for(int i = 0; i < Size; i++)
-      pVector[i] = v.pVector[i];
-    return *this;
+  }
+  StartIndex = v.StartIndex;
+  for(int i = 0; i < Size; i++)
+    pVector[i] = v.pVector[i];
+  return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // прибавить скаляр
@@ -168,7 +166,7 @@ template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
   if((Size != v.Size) || (StartIndex != v.StartIndex))
-    throw string("Different size of TVectors");
+    throw string("Different size of TVector's");
   TVector<ValType> out(Size, StartIndex);
   for(int i = 0; i < Size; i++)
     out.pVector[i] = pVector[i] + v.pVector[i];
@@ -179,7 +177,7 @@ template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
   if((Size != v.Size) || (StartIndex != v.StartIndex))
-    throw string("Different size of TVectors");
+    throw string("Different size of TVector's");
   TVector<ValType> out(Size, StartIndex);
   for(int i = 0; i < Size; i++)
     out.pVector[i] = pVector[i] - v.pVector[i];
@@ -191,7 +189,7 @@ template <class ValType> // скалярное произведение
 ValType TVector<ValType>::operator*(const TVector<ValType> &v)
 {
   if((Size != v.Size) || (StartIndex != v.StartIndex))
-    throw string("Different size of TVectors");
+    throw string("Different size of TVector's");
   ValType sum = 0;
   for(int i = 0; i < Size; i++)
     sum += pVector[i] * v.pVector[i];
@@ -231,11 +229,11 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType>>(s)
 {
-  if((s < 0) || (s > MAX_MATRIX_SIZE ))
-      throw string("Wrong argument");
+  if((s < 1) || (s > MAX_MATRIX_SIZE ))
+    throw string("Wrong argument");
   for(int i = 0; i < s; i++) {
-      TVector<ValType> tmp (s-i, i);
-      this->pVector[i] = tmp;
+    TVector<ValType> tmp (s-i, i);
+    this->pVector[i] = tmp;
   }
 } /*-------------------------------------------------------------------------*/
 
