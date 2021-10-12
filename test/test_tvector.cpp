@@ -4,18 +4,6 @@
 
 TEST(TVector, can_create_vector_with_positive_length)
 {
-	try 
-	{
-		TVector<int> v(5);
-	}
-	catch (int)
-	{
-		cout << "int\n";
-	}
-	catch (...)
-	{
-		cout << "any\n";
-	}
   ASSERT_NO_THROW(TVector<int> v(5));
 }
 
@@ -33,10 +21,6 @@ TEST(TVector, throws_when_create_vector_with_negative_startindex)
 {
   ASSERT_ANY_THROW(TVector<int> v(5, -2));
 }
-TEST(TVector, throws_when_create_vector_with_too_large_startindex)
-{
-	ASSERT_ANY_THROW(TVector<int> v(5, 5));
-}
 
 TEST(TVector, can_create_copied_vector)
 {
@@ -46,7 +30,7 @@ TEST(TVector, can_create_copied_vector)
 
 TEST(TVector, copied_vector_is_equal_to_source_one)
 {
-	TVector<int> v(10);
+	TVector<int> v(5);
 	TVector<int> v1(v);
 	EXPECT_EQ(v, v1);
 }

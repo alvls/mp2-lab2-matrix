@@ -25,8 +25,7 @@ TEST(TMatrix, can_create_copied_matrix)
 
 TEST(TMatrix, copied_matrix_is_equal_to_source_one)
 {
-	TMatrix<int> m(2);
-	TMatrix<int> copy(m);
+	TMatrix<int> m(4), copy(m);
 	EXPECT_EQ(m, copy);
 }
 
@@ -75,7 +74,9 @@ TEST(TMatrix, can_assign_matrices_of_equal_size)
 {
 	TMatrix<int> m(3);
 	TMatrix<int> m1(m);
-	m1[2][0] += 7;
+	for (int i = 0; i < 3; i++)
+		for (int j = i; j < 3; j++)
+			m[i][j] = 7;
 	m1 = m;
 	EXPECT_EQ(m, m1);
 }
@@ -139,7 +140,7 @@ TEST(TMatrix, can_subtract_matrices_with_equal_size)
 	TMatrix<int> m(3);
 	TMatrix<int> m1(3);
 	for (int i = 0; i < 3; i++)
-		for (int j = i; j < 3 - i; j++)
+		for (int j = i; j < 3; j++)
 			m1[i][j] = 1 + i - j;
 	TMatrix<int> standart(m);
 	for (int i = 0; i < 3; i++)
