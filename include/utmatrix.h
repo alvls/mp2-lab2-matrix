@@ -65,7 +65,7 @@ public:
 template <class ValType>
 TVector<ValType>::TVector(int s, int si) : Size(s), StartIndex(si)
 {
-  if((s < 0) || (s > MAX_VECTOR_SIZE) || (si < 0))
+  if((s < 1) || (s > MAX_VECTOR_SIZE) || (si < 0) || (si > MAX_MATRIX_SIZE -1))
     throw string("Wrong arguments");
   pVector = new ValType[s]{};
 } /*-------------------------------------------------------------------------*/
