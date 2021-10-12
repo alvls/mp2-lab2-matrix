@@ -115,9 +115,7 @@ TEST(TVector, compare_vector_with_itself_return_true)
 {
 	TVector<int> v(7);
 	for (int i = 0; i < 7; i++)
-	{
 		v[i] = i;
-	}
 	EXPECT_NO_THROW(v == v);
 }
 

@@ -65,9 +65,7 @@ template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
     if ((s < 1) || (si < 0) || (s > MAX_VECTOR_SIZE))
-    {
         throw "It is a mistake in your data";
-    }
     Size = s;
     StartIndex = si;
     pVector = new ValType[s];
@@ -81,9 +79,7 @@ TVector<ValType>::TVector(const TVector<ValType>& v)
     StartIndex = v.StartIndex;
     pVector = new ValType[Size];
     for (int i = 0; i < Size; i++)
-    {
         pVector[i] = v.pVector[i];
-    }
 }
 
 template <class ValType>
@@ -96,9 +92,7 @@ template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
     if ((pos - StartIndex < 0) || (pos - StartIndex >= Size))
-    {
         throw "It is a mistake in your data";
-    }
     return pVector[pos - StartIndex];
 }
 
@@ -135,9 +129,7 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector& v)
         delete[] pVector;
         pVector = new ValType[Size];
         for (int i = 0; i < Size; i++)
-        {
             pVector[i] = v.pVector[i];
-        }
     }
     return *this;
 }
@@ -231,9 +223,7 @@ public:
     friend ostream& operator<<(ostream& out, const TMatrix& mt)
     {
         for (int i = 0; i < mt.Size; i++)
-        {
             out << mt.pVector[i] << endl;
-        }
         return out;
     }
 };
@@ -244,9 +234,7 @@ TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType>>(s)
     if ((s < 1) || (s > MAX_MATRIX_SIZE))
         throw "ERROR";
     for (int i = 0; i < s; i++)
-    {
         pVector[i] = TVector<ValType>(s - i, i);
-    }
 }
 
 template <class ValType> // конструктор копирования
@@ -269,12 +257,8 @@ bool TMatrix<ValType>::operator==(const TMatrix<ValType>& mt) const
     if (Size != mt.Size)
         return false;
     for (int i = 0; i < Size; i++)
-    {
         if (pVector[i] != mt.pVector[i])
-        {
             return false;
-        }
-    }
     return true;
 }
 
@@ -311,9 +295,7 @@ TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType>& mt)
         throw "ERROR";
     TMatrix<ValType> temp(mt.Size);
     for (int i = 0; i < mt.Size; i++)
-    {
         temp.pVector[i] = pVector[i] + mt.pVector[i];
-    }
     return temp;
 }
 
@@ -324,9 +306,7 @@ TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType>& mt)
         throw "ERROR";
     TMatrix<ValType> temp(mt.Size);
     for (int i = 0; i < mt.Size; i++)
-    {
         temp.pVector[i] = pVector[i] - mt.pVector[i];
-    }
     return temp;
 }
 
