@@ -162,7 +162,7 @@ TEST (TMatrix, cant_add_matrices_with_not_equal_size)
   TMatrix<int> mt1(4), mt2(5);
 
   ASSERT_ANY_THROW (mt1 + mt2);
-}
+} 
 
 TEST (TMatrix, can_subtract_matrices_with_equal_size)
 {

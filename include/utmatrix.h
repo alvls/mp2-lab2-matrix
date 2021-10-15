@@ -170,9 +170,9 @@ TVector<ValType> TVector<ValType>::operator*(const ValType& val)
 template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType>& v)
 {
+  if (Size != v.Size)
+    throw "Vectores have different sizes";
   TVector<ValType> result(*this);
-  if (result.Size != v.Size)
-     throw "Vectores have different sizes";
   for (int i = 0; i < result.Size; i++)
     result.pVector[i] += v.pVector[i];
   return result;
@@ -181,12 +181,12 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType>& v)
 template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType>& v)
 {
-  TVector<ValType> result(*this);
-  if(result.Size != v.Size)
+  if (Size != v.Size)
     throw "Vectores have different sizes";
+  TVector<ValType> result(*this);
   for (int i = 0; i < result.Size; i++)
     result.pVector[i] -= v.pVector[i];
-  return result;
+  return result; 
 } 
 
 template <class ValType> // скалярное произведение
