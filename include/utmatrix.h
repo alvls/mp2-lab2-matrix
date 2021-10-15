@@ -188,14 +188,10 @@ ValType TVector<ValType>::operator*(const TVector<ValType>& v)
 {
     if (Size != v.Size)
         throw "It is a mistake in your data";
-    TVector<ValType> temp(Size, StartIndex);
-    ValType sum = 0, tmp;
-    for (int i = 0; i < Size; i++)
-    {
-        temp.pVector[i] = pVector[i] * v.pVector[i];
-        sum += temp.pVector[i];
-    }
-    return sqrt(sum);
+    ValType sum = 0;
+    for (int i = 0; i < Size; i++)    
+        sum += pVector[i] * v.pVector[i];
+    return sum;
 }
 
 

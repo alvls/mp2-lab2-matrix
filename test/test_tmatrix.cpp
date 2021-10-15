@@ -106,7 +106,7 @@ TEST(TMatrix, compare_matrix_with_itself_return_true)
 TEST(TMatrix, matrices_with_different_size_are_not_equal)
 {
 	TMatrix<int> v(5), temp(6);
-	EXPECT_NE(v.GetSize(), temp.GetSize());
+	EXPECT_EQ(1, v != temp);
 }
 
 TEST(TMatrix, can_add_matrices_with_equal_size)
