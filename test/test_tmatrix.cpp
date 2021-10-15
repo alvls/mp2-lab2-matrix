@@ -72,7 +72,6 @@ TEST(TMatrix, throws_when_set_element_with_negative_index)
 	TMatrix<int> m(size);
 
 	ASSERT_ANY_THROW(m[2][-3] = 7);
-	ASSERT_ANY_THROW(m[-2][-3] = 7);
 }
 
 TEST(TMatrix, throws_when_set_element_with_too_large_index)
