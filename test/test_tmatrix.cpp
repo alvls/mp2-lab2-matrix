@@ -40,7 +40,7 @@ TEST(TMatrix, copied_matrix_has_its_own_memory)
 TEST(TMatrix, can_get_size)
 {
 	TMatrix<int> m(5);
-	ASSERT_NO_THROW(m.GetSize());
+	EXPECT_EQ(5, m.GetSize());
 }
 
 TEST(TMatrix, can_set_and_get_element)
