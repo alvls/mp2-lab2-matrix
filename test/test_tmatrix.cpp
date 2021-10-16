@@ -41,7 +41,7 @@ TEST(TMatrix, copied_matrix_has_its_own_memory)
         for (int j = i; j < 5; j++)
             a[i][j] = i * 10 + j;
     TMatrix<int> b(a);
-    EXPECT_NE(&a, &b);
+    EXPECT_NE(&a[0], &b[0]);
 }
 
 TEST(TMatrix, can_get_size)
