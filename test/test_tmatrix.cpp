@@ -76,7 +76,7 @@ TEST(TMatrix, can_assign_matrices_of_equal_size)
 	TMatrix<int> m(3);
 	TMatrix<int> m1(m);
 	for (int i = 0; i < 3; i++)
-		for (int j = i; j < 3; j++)
+		for (int j = 0; j < 3 - i; j++)
 			m[i][j] = 7;
 	m1 = m;
 	EXPECT_EQ(m, m1);
@@ -122,7 +122,7 @@ TEST(TMatrix, can_add_matrices_with_equal_size)
 	TMatrix<int> m(3);
 	TMatrix<int> m1(3);
 	for (int i = 0; i < 3; i++)
-		m1[i][i] += 8;
+		m1[i][2 - i] += 8;
 	TMatrix<int> standart(m);
 	for (int i = 0; i < 3; i++)
 		standart[i] = m1[i] + standart[i];
@@ -141,7 +141,7 @@ TEST(TMatrix, can_subtract_matrices_with_equal_size)
 	TMatrix<int> m(3);
 	TMatrix<int> m1(3);
 	for (int i = 0; i < 3; i++)
-		for (int j = i; j < 3; j++)
+		for (int j = 0; j < 2-i; j++)
 			m1[i][j] = 1 + i - j;
 	TMatrix<int> standart(m);
 	for (int i = 0; i < 3; i++)

@@ -53,10 +53,10 @@ public:
     }
     friend ostream& operator<<(ostream& out, const TVector& v)
     {
+        for (int i = 0; i < v.Size; i++)
+            out << v.pVector[i] << ' ';
         for (int i = 0; i < v.StartIndex; i++)
             out << "0 ";
-        for (int i = v.StartIndex; i < v.Size; i++)
-            out << v.pVector[i] << ' ';
         return out;
     }
 };
@@ -79,7 +79,7 @@ template <class ValType> //конструктор копирования
 TVector<ValType>::TVector(const TVector<ValType>& v) :Size(v.Size), StartIndex(v.StartIndex)////////////////////////////////
 {
     pVector = new ValType[Size];
-    for (int i = StartIndex; i < Size; i++)
+    for (int i = 0; i < Size; i++)
         pVector[i] = v.pVector[i];
 } /*-------------------------------------------------------------------------*/
 
@@ -92,12 +92,9 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
-    int i = pos - StartIndex;
+    int i = pos;// -StartIndex;
     if (i < 0 || i >= Size)
     {
-        //cout << "Size_1 = " << Size << endl;///////////////////////////////////////////////////
-        //cout << "pos_1 = " << pos << endl;
-        //cout << "StartIndex_1 = " << StartIndex << endl;
         throw - 1;
     }
     return pVector[i];
@@ -300,12 +297,11 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
-    TMatrix<ValType> tmp(Size);
+    TMatrix<ValType> tmp(*this);
     if (tmp.Size != mt.Size)
         throw string("not equal size");
     for (int i = 0; i < Size; i++)
-        for(int j=i;j<Size;j++)
-        tmp.pVector[i][j] = tmp.pVector[i][j] + mt.pVector[i][j];
+        tmp.pVector[i] = tmp.pVector[i] + mt.pVector[i];
     return tmp;
 } /*-------------------------------------------------------------------------*/
 
