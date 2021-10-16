@@ -33,19 +33,20 @@ TEST(TMatrix, copied_matrix_is_equal_to_source_one)
 TEST(TMatrix, copied_matrix_has_its_own_memory)
 {
 	TMatrix<int> m1(5), m2(m1);//
-	EXPECT_NE(&m1, &m2);
+	EXPECT_NE(&m1[0][0], &m2[0][0]);
 }
 
 TEST(TMatrix, can_get_size)
 {
 	TMatrix<int> m(5);//
-	ASSERT_NO_THROW(m.GetSize());
+	EXPECT_EQ(5, m.GetSize());
 }
 
 TEST(TMatrix, can_set_and_get_element)
 {
 	TMatrix<int> m(5);//
-	ASSERT_NO_THROW(m[1][1] = m[2][2]);
+	m[0][0] = -1;
+	EXPECT_EQ(-1, m[0][0]);
 }
 
 TEST(TMatrix, throws_when_set_element_with_negative_index)

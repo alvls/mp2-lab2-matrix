@@ -38,7 +38,7 @@ TEST(TVector, copied_vector_is_equal_to_source_one)
 TEST(TVector, copied_vector_has_its_own_memory)
 {
 	TVector<int> v1(5), v2(v1);//
-	EXPECT_NE(&v1, &v2);
+	EXPECT_NE(&v1[0], &v2[0]);
 }
 
 TEST(TVector, can_get_size)
@@ -58,7 +58,8 @@ TEST(TVector, can_get_start_index)
 TEST(TVector, can_set_and_get_element)
 {
   TVector<int> v(4);
-  ASSERT_NO_THROW(v[1] = v[3]);
+  v[0] = -1;
+  EXPECT_EQ(-1, v[0]);
 }
 
 TEST(TVector, throws_when_set_element_with_negative_index)
