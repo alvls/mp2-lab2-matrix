@@ -70,14 +70,16 @@ TVector<ValType>::TVector(int s, int si)
         throw - 1;
     Size = s;
     StartIndex = si;
+    /*cout << "StartIndex = " << StartIndex << endl;////////////////////////////////////////////////
+    cout << "Size = " << Size << endl;*/
     pVector = new ValType[Size];
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> //конструктор копирования
-TVector<ValType>::TVector(const TVector<ValType>& v) :Size(v.Size), StartIndex(v.StartIndex)
+TVector<ValType>::TVector(const TVector<ValType>& v) :Size(v.Size), StartIndex(v.StartIndex)////////////////////////////////
 {
     pVector = new ValType[Size];
-    for (int i = 0; i < Size; i++)
+    for (int i = StartIndex; i < Size; i++)
         pVector[i] = v.pVector[i];
 } /*-------------------------------------------------------------------------*/
 
@@ -91,8 +93,13 @@ template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
     int i = pos - StartIndex;
-    if (i<0 || i>=Size)
+    if (i < 0 || i >= Size)
+    {
+        //cout << "Size_1 = " << Size << endl;///////////////////////////////////////////////////
+        //cout << "pos_1 = " << pos << endl;
+        //cout << "StartIndex_1 = " << StartIndex << endl;
         throw - 1;
+    }
     return pVector[i];
 } /*-------------------------------------------------------------------------*/
 
@@ -105,9 +112,8 @@ bool TVector<ValType>::operator==(const TVector &v) const
         return false;
     if (StartIndex != v.StartIndex)
         return false;
-    TVector<ValType> tmp(v);
     for (int i = 0; i < Size; i++)
-        if (pVector[i] != tmp[i])
+        if (pVector[i] != v.pVector[i])
             return false;
     return true;
 } /*-------------------------------------------------------------------------*/
@@ -243,9 +249,10 @@ TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // конструктор копирования
-TMatrix<ValType>::TMatrix(const TMatrix<ValType> &mt):
-  TVector<TVector<ValType> >(mt)
+TMatrix<ValType>::TMatrix(const TMatrix<ValType>& mt):
+    TVector<TVector<ValType> >(mt)
 {
+
 }
 
 template <class ValType> // конструктор преобразования типа
@@ -287,16 +294,18 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
     }
     StartIndex = mt.StartIndex;
     std::copy(mt.pVector, mt.pVector + Size, pVector);
+    return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
-    TMatrix<ValType> tmp(*this);
+    TMatrix<ValType> tmp(Size);
     if (tmp.Size != mt.Size)
         throw string("not equal size");
     for (int i = 0; i < Size; i++)
-        tmp.pVector[i] = tmp.pVector[i] + mt.pVector[i];
+        for(int j=i;j<Size;j++)
+        tmp.pVector[i][j] = tmp.pVector[i][j] + mt.pVector[i][j];
     return tmp;
 } /*-------------------------------------------------------------------------*/
 
