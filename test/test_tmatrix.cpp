@@ -1,111 +1,187 @@
-#include "utmatrix.h"
+#include "TMatrix.h"
+#include "..\src\TMatrix.cpp"
 
 #include <gtest.h>
 
-TEST(TMatrix, can_create_matrix_with_positive_length)
+using testing::Types;
+
+template <class T>
+class TDynamicMatrixTest : public testing::Test {};
+typedef Types<int, double> Implementations;
+
+TYPED_TEST_CASE(TDynamicMatrixTest, Implementations);
+
+TYPED_TEST(TDynamicMatrixTest, can_create_matrix_with_positive_length)
 {
-  ASSERT_NO_THROW(TMatrix<int> m(5));
+  ASSERT_NO_THROW(TDynamicMatrix<TypeParam> mat(3));
 }
 
-TEST(TMatrix, cant_create_too_large_matrix)
+TYPED_TEST(TDynamicMatrixTest, can_not_create_matrix_with_negative_length)
 {
-  ASSERT_ANY_THROW(TMatrix<int> m(MAX_MATRIX_SIZE + 1));
+  ASSERT_ANY_THROW(TDynamicMatrix<TypeParam> mat(-1));
 }
 
-TEST(TMatrix, throws_when_create_matrix_with_negative_length)
+TYPED_TEST(TDynamicMatrixTest, can_get_matrix_size)
 {
-  ASSERT_ANY_THROW(TMatrix<int> m(-5));
+  TDynamicMatrix<TypeParam> mat(3);
+
+  EXPECT_EQ(3, mat.GetSize());
 }
 
-TEST(TMatrix, can_create_copied_matrix)
+TYPED_TEST(TDynamicMatrixTest, can_compare_matrix_equivalence)
 {
-  TMatrix<int> m(5);
-
-  ASSERT_NO_THROW(TMatrix<int> m1(m));
+  TDynamicMatrix<TypeParam> mat1(2);
+  TDynamicMatrix<TypeParam> mat2(2);
+  mat1[0][0] = 0;
+  mat1[0][1] = 1;
+  mat1[1][0] = 2;
+  mat1[1][1] = 3;
+  mat2[0][0] = 0;
+  mat2[0][1] = 1;
+  mat2[1][0] = 2;
+  mat2[1][1] = 3;
+  EXPECT_EQ(mat1 == mat2, true);
 }
 
-TEST(TMatrix, copied_matrix_is_equal_to_source_one)
+TYPED_TEST(TDynamicMatrixTest, can_compare_matrix_nonequivalence)
 {
-  ADD_FAILURE();
+  TDynamicMatrix<TypeParam> mat1(2);
+  TDynamicMatrix<TypeParam> mat2(2);
+  mat1[0][0] = 0;
+  mat1[0][1] = 1;
+  mat1[1][0] = 2;
+  mat1[1][1] = 3;
+  mat2[0][0] = 1;
+  mat2[0][1] = 1;
+  mat2[1][0] = 2;
+  mat2[1][1] = 3;
+  EXPECT_EQ(mat1 != mat2, true);
 }
 
-TEST(TMatrix, copied_matrix_has_its_own_memory)
+TYPED_TEST(TDynamicMatrixTest, can_not_compare_empty_matrix_equivalence)
 {
-  ADD_FAILURE();
+  TDynamicMatrix<TypeParam> mat1;
+  TDynamicMatrix<TypeParam> mat2;
+  ASSERT_ANY_THROW(mat1 == mat2);
 }
 
-TEST(TMatrix, can_get_size)
+TYPED_TEST(TDynamicMatrixTest, can_not_compare_empty_matrix_nonequivalence)
 {
-  ADD_FAILURE();
+  TDynamicMatrix<TypeParam> mat1;
+  TDynamicMatrix<TypeParam> mat2;
+  ASSERT_ANY_THROW(mat1 != mat2);
 }
 
-TEST(TMatrix, can_set_and_get_element)
+TYPED_TEST(TDynamicMatrixTest, can_sum_matrixes)
 {
-  ADD_FAILURE();
+  TDynamicMatrix<TypeParam> mat1(2);
+  TDynamicMatrix<TypeParam> mat2(2);
+  mat1[0][0] = 0;
+  mat1[0][1] = 1;
+  mat1[1][0] = 2;
+  mat1[1][1] = 3;
+  mat2[0][0] = 1;
+  mat2[0][1] = 1;
+  mat2[1][0] = 2;
+  mat2[1][1] = 3;
+  TDynamicMatrix<TypeParam> mat3 = mat1 + mat2;
+  EXPECT_EQ(mat3[0][0], 1);
+  EXPECT_EQ(mat3[0][1], 2);
+  EXPECT_EQ(mat3[1][0], 4);
+  EXPECT_EQ(mat3[1][1], 6);
 }
 
-TEST(TMatrix, throws_when_set_element_with_negative_index)
+TYPED_TEST(TDynamicMatrixTest, can_substract_matrixes)
 {
-  ADD_FAILURE();
+  TDynamicMatrix<TypeParam> mat1(2);
+  TDynamicMatrix<TypeParam> mat2(2);
+  mat1[0][0] = 4;
+  mat1[0][1] = 6;
+  mat1[1][0] = 8;
+  mat1[1][1] = 10;
+  mat2[0][0] = 0;
+  mat2[0][1] = 1;
+  mat2[1][0] = 2;
+  mat2[1][1] = 3;
+  TDynamicMatrix<TypeParam> mat3 = mat1 - mat2;
+  EXPECT_EQ(mat3[0][0], 4);
+  EXPECT_EQ(mat3[0][1], 5);
+  EXPECT_EQ(mat3[1][0], 6);
+  EXPECT_EQ(mat3[1][1], 7);
 }
 
-TEST(TMatrix, throws_when_set_element_with_too_large_index)
+TYPED_TEST(TDynamicMatrixTest, can_not_sum_empty_matrixes)
 {
-  ADD_FAILURE();
+  TDynamicMatrix<TypeParam> mat1;
+  TDynamicMatrix<TypeParam> mat2;
+  ASSERT_ANY_THROW(TDynamicMatrix<TypeParam> mat3 = mat1 + mat2);
 }
 
-TEST(TMatrix, can_assign_matrix_to_itself)
+TYPED_TEST(TDynamicMatrixTest, can_not_substract_empty_matrixes)
 {
-  ADD_FAILURE();
+  TDynamicMatrix<TypeParam> mat1;
+  TDynamicMatrix<TypeParam> mat2;
+  ASSERT_ANY_THROW(TDynamicMatrix<TypeParam> mat3 = mat1 - mat2);
 }
 
-TEST(TMatrix, can_assign_matrices_of_equal_size)
+TYPED_TEST(TDynamicMatrixTest, can_not_sum_matrixes_differrent_sizes)
 {
-  ADD_FAILURE();
+  TDynamicMatrix<TypeParam> mat1(1);
+  TDynamicMatrix<TypeParam> mat2(2);
+  ASSERT_ANY_THROW(TDynamicMatrix<TypeParam> mat3 = mat1 + mat2);
 }
 
-TEST(TMatrix, assign_operator_change_matrix_size)
+TYPED_TEST(TDynamicMatrixTest, can_not_substract_matrixes_differrent_sizes)
 {
-  ADD_FAILURE();
+  TDynamicMatrix<TypeParam> mat1(1);
+  TDynamicMatrix<TypeParam> mat2(2);
+  ASSERT_ANY_THROW(TDynamicMatrix<TypeParam> mat3 = mat1 - mat2);
 }
 
-TEST(TMatrix, can_assign_matrices_of_different_size)
+TYPED_TEST(TDynamicMatrixTest, can_mult_matrixes)
 {
-  ADD_FAILURE();
+  TDynamicMatrix<TypeParam> mat1(2);
+  TDynamicMatrix<TypeParam> mat2(2);
+  mat1[0][0] = 4;
+  mat1[0][1] = 6;
+  mat1[1][0] = 8;
+  mat1[1][1] = 10;
+  mat2[0][0] = 0;
+  mat2[0][1] = 1;
+  mat2[1][0] = 2;
+  mat2[1][1] = 3;
+  TDynamicMatrix<TypeParam> mat3 = mat1 * mat2;
+  EXPECT_EQ(mat3[0][0], 8);
+  EXPECT_EQ(mat3[0][1], 10);
+  EXPECT_EQ(mat3[1][0], 32);
+  EXPECT_EQ(mat3[1][1], 42);
 }
 
-TEST(TMatrix, compare_equal_matrices_return_true)
+TYPED_TEST(TDynamicMatrixTest, can_mult_matrix_on_vector)
 {
-  ADD_FAILURE();
+  TDynamicMatrix<TypeParam> mat(2);
+  TDynamicVector<TypeParam> vec1(2);
+  mat[0][0] = 1;
+  mat[0][1] = 2;
+  mat[1][0] = 3;
+  mat[1][1] = 4;
+  vec1[0] = 1;
+  vec1[1] = 2;
+  TDynamicVector<TypeParam> vec2 = mat * vec1;
+  EXPECT_EQ(vec2[0], 7);
+  EXPECT_EQ(vec2[1], 10);
 }
 
-TEST(TMatrix, compare_matrix_with_itself_return_true)
+TYPED_TEST(TDynamicMatrixTest, can_mult_matrix_on_scalar)
 {
-  ADD_FAILURE();
+  TDynamicMatrix<TypeParam> mat(2);
+  mat[0][0] = 1;
+  mat[0][1] = 2;
+  mat[1][0] = 3;
+  mat[1][1] = 4;
+  TDynamicMatrix<TypeParam> res = mat * 2;
+  EXPECT_EQ(res[0][0], 2);
+  EXPECT_EQ(res[0][1], 4);
+  EXPECT_EQ(res[1][0], 6);
+  EXPECT_EQ(res[1][1], 8);
 }
-
-TEST(TMatrix, matrices_with_different_size_are_not_equal)
-{
-  ADD_FAILURE();
-}
-
-TEST(TMatrix, can_add_matrices_with_equal_size)
-{
-  ADD_FAILURE();
-}
-
-TEST(TMatrix, cant_add_matrices_with_not_equal_size)
-{
-  ADD_FAILURE();
-}
-
-TEST(TMatrix, can_subtract_matrices_with_equal_size)
-{
-  ADD_FAILURE();
-}
-
-TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
-{
-  ADD_FAILURE();
-}
-
