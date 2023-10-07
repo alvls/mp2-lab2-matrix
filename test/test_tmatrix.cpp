@@ -1,5 +1,4 @@
 #include "utmatrix.h"
-
 #include <gtest.h>
 
 TEST(TMatrix, can_create_matrix_with_positive_length)
@@ -10,6 +9,11 @@ TEST(TMatrix, can_create_matrix_with_positive_length)
 TEST(TMatrix, cant_create_too_large_matrix)
 {
   ASSERT_ANY_THROW(TMatrix<int> m(MAX_MATRIX_SIZE + 1));
+}
+
+TEST(TMatrix, can_create_matrix_of_elements)
+{
+	ASSERT_NO_THROW(TMatrix<int>(5, 4));
 }
 
 TEST(TMatrix, throws_when_create_matrix_with_negative_length)
@@ -45,8 +49,8 @@ TEST(TMatrix, can_get_size)
 TEST(TMatrix, can_set_and_get_element)
 {
 	TMatrix<int> m(5);
-	ASSERT_NO_THROW(m[1][1]);
-	ASSERT_NO_THROW(m[1][1] = 0);
+	ASSERT_NO_THROW(m.GetVector()[1][1]);
+	ASSERT_NO_THROW(m.GetVector()[1][1] = 2);
 }
 
 TEST(TMatrix, throws_when_set_element_with_negative_index)
@@ -56,7 +60,14 @@ TEST(TMatrix, throws_when_set_element_with_negative_index)
 
 TEST(TMatrix, throws_when_set_element_with_too_large_index)
 {
-	ASSERT_ANY_THROW(TMatrix<int>(5)[6]);;
+	ASSERT_ANY_THROW(TMatrix<int>(5)[6]);
+}
+
+TEST(TMatrix, can_clear_matrix)
+{
+	TMatrix<int> m(5, 5);
+	m.Clr();
+	EXPECT_EQ(m, TMatrix<int>(5, 0));
 }
 
 TEST(TMatrix, can_assign_matrix_to_itself)
@@ -126,7 +137,7 @@ TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
 	ASSERT_ANY_THROW(m - c);
 }
 
-TEST(TMatrix, test)
+TEST(TMatrix, operator_add_with_matrix)
 {
 	TMatrix<int> a(2), b(2), c(2), res(2);
 	a[1][1] = 1; b[1][1] = 1; res[1][1] = 2;
@@ -134,3 +145,28 @@ TEST(TMatrix, test)
 	EXPECT_EQ(c, res);
 }
 
+TEST(TMatrix, operator_subtract_with_matrix)
+{
+	TMatrix<int> a(2), b(2), c(2), res(2);
+	a[1][1] = 1; b[1][1] = 1;
+	c = a - b;
+	EXPECT_EQ(c, res);
+}
+
+TEST(TMatrix, test_increments)
+{
+	TMatrix<int> a(3, 1), b(3, 2);
+	EXPECT_EQ(++a++, b);
+;}
+
+TEST(TMatrix, test_decrements)
+{
+	TMatrix<int> a(3, 1), b(3, 2);
+	EXPECT_EQ(a, --b--);
+}
+
+TEST(TMatrix, working_add_and_subtract_operators_together)
+{
+	TMatrix<int> a(3, 3), b(3, 4), c(3, 5), res(3, 8);
+	EXPECT_EQ(b + c - a + c - a, res);
+}

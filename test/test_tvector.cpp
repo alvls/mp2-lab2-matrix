@@ -17,6 +17,10 @@ TEST(TVector, throws_when_create_vector_with_negative_length)
 	ASSERT_ANY_THROW(TVector<int> v(-5));
 }
 
+TEST(TVector, can_create_vector_of_elements)
+{
+	ASSERT_NO_THROW(TVector<int>(5, 3));
+}
 
 TEST(TVector, can_create_copied_vector)
 {
@@ -128,15 +132,20 @@ TEST(TVector, operator_add_scalar)
 	int a[] = { 1, 1, 1 }, b[] = { 2, 2, 2 };
 	
 	TVector<int> v(a, 3), res(b, 3);
-	cout << v + 1;
-	cout << res;
-
+	EXPECT_EQ(v + 1, res);
 }
 
 TEST(TVector, can_subtract_scalar_from_vector)
 {
 	TVector<int> v(4);
 	ASSERT_NO_THROW(v - 3);
+}
+
+TEST(TVector, operator_subtract_scalar)
+{
+	int a[] = { 1, 1, 1 }, b[] = { 0, 0, 0 };
+	TVector<int> v(a, 3), res(b, 3);
+	EXPECT_EQ(v - 1, res);
 }
 
 TEST(TVector, can_multiply_scalar_by_vector)
@@ -157,6 +166,13 @@ TEST(TVector, cant_add_vectors_with_not_equal_size)
 	ASSERT_ANY_THROW(v + c);
 }
 
+TEST(TVector, operator_add_with_vector)
+{
+	int a[] = { 1, 1, 1 }, b[] = { 2, 2, 2 }, c[] = { 3, 3, 3 };
+	TVector<int> v(a, 3), w(b, 3), res(c, 3);
+	EXPECT_EQ(v + w, res);
+}
+
 TEST(TVector, can_subtract_vectors_with_equal_size)
 {
 	TVector<int> v(4), c(4);
@@ -167,6 +183,13 @@ TEST(TVector, cant_subtract_vectors_with_not_equal_size)
 {
 	TVector<int> v(4), c(5);
 	ASSERT_ANY_THROW(v - c);
+}
+
+TEST(TVector, operator_subtract_with_vector)
+{
+	int a[] = { 1, 1, 1 }, b[] = { 2, 2, 2 }, c[] = { -1, -1, -1 };
+	TVector<int> v(a, 3), w(b, 3), res(c, 3);
+	EXPECT_EQ(v - w, res);
 }
 
 TEST(TVector, can_multiply_vectors_with_equal_size)
@@ -181,4 +204,40 @@ TEST(TVector, cant_multiply_vectors_with_not_equal_size)
 	ASSERT_ANY_THROW(v * c);
 }
 
+TEST(TVector, operator_multiply_vectors)
+{
+	int a[] = { 1, 1, 1 }, b[] = { 2, 2, 2 };
+	TVector<int> v(a, 3), w(b, 3);
+	int res = 6;
+	EXPECT_EQ(v * w, res);
+}
+
+TEST(TVector, test_increments)
+{
+	const int a1[] = { 1, 1, 1 }, b1[] = { 3, 3, 3 };
+	TVector<int> a(3), b(3);
+	a = a1; b = b1;
+	EXPECT_EQ(++a++,b );
+;}
+
+TEST(TVector, test_decrements)
+{
+	const int a1[] = { 1, 1, 1 }, b1[] = { 3, 3, 3 };
+	TVector<int> a(3), b(3);
+	a = a1; b = b1;
+	EXPECT_EQ(a, --b--);
+}
+
+TEST(TVector, test_add_and_subtract_operators)
+{
+	TMatrix<int> a(3, 3), b(3, 4), c(3, 5), res(3, 8);
+	EXPECT_EQ(b + c - a + c - a, res);
+}
+
+TEST(TVector, composition_of_operators)
+{
+	TVector<int> a(3, 3), b(3, 4), c(3, 5), res(3, -68);
+	--a -= ++(b + c + b * c);
+	EXPECT_EQ(a, res);
+}
 
