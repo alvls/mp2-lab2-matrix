@@ -74,6 +74,7 @@ TEST(TMatrix, can_assign_matrices_of_equal_size)
 TEST(TMatrix, assign_operator_change_matrix_size)
 {
 	TMatrix<int> m(5), c(3);
+	m = c;
 	EXPECT_EQ(m.GetSize(), 3);
 }
 
@@ -123,5 +124,13 @@ TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
 {
 	TMatrix<int> m(5), c(3);
 	ASSERT_ANY_THROW(m - c);
+}
+
+TEST(TMatrix, test)
+{
+	TMatrix<int> a(2), b(2), c(2), res(2);
+	a[1][1] = 1; b[1][1] = 1; res[1][1] = 2;
+	c = a + b;
+	EXPECT_EQ(c, res);
 }
 

@@ -37,6 +37,12 @@ TEST(TVector, copied_vector_has_its_own_memory)
 	EXPECT_NE(v.GetVector(), cv.GetVector());
 }
 
+TEST(TVector, can_create_vector_from_array)
+{
+	int a[] = { 1, 2, 3, 4 };
+	ASSERT_NO_THROW(TVector<int>(a, 4));
+}
+
 TEST(TVector, can_get_size)
 {
 	TVector<int> v(4);
@@ -50,6 +56,8 @@ TEST(TVector, can_set_and_get_element)
 	TVector<int> v(4);
 	v[0] = 4;
 
+	ASSERT_NO_THROW(v[0]);
+	ASSERT_NO_THROW(v[0] = 4);
 	EXPECT_EQ(4, v[0]);
 }
 
@@ -115,6 +123,16 @@ TEST(TVector, can_add_scalar_to_vector)
 	ASSERT_NO_THROW(v + 3);
 }
 
+TEST(TVector, operator_add_scalar)
+{
+	int a[] = { 1, 1, 1 }, b[] = { 2, 2, 2 };
+	
+	TVector<int> v(a, 3), res(b, 3);
+	cout << v + 1;
+	cout << res;
+
+}
+
 TEST(TVector, can_subtract_scalar_from_vector)
 {
 	TVector<int> v(4);
@@ -162,4 +180,5 @@ TEST(TVector, cant_multiply_vectors_with_not_equal_size)
 	TVector<int> v(4), c(5);
 	ASSERT_ANY_THROW(v * c);
 }
+
 

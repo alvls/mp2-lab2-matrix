@@ -27,8 +27,8 @@ protected:
 	size_t Size;       // размер вектора
 public:
 	TVector(size_t s = 10);
-	TVector(const TVector& v); 
-	TVector(ValType* arr);// конструктор копирования
+	TVector(const TVector& v); // конструктор копирования
+	TVector(ValType arr[], size_t s);
 	~TVector();
 	size_t GetSize() const; // размер вектора
 	ValType* GetVector() const; // получить вектор
@@ -86,9 +86,13 @@ TVector<ValType>::TVector(const TVector<ValType>& v) : Size(v.Size)
 }
 
 template <class ValType>
-TVector<ValType>::TVector(ValType* arr)
+TVector<ValType> ::TVector(ValType arr[], size_t s) : Size(s)
 {
-
+	if (s <= 0 || s > MAX_VECTOR_SIZE)
+		throw invalid_argument("invalid length");
+	pVector = new ValType[Size];
+	for (int i = 0; i < Size; i++)
+		pVector[i] = arr[i];
 }
 
 template <class ValType>
@@ -325,7 +329,7 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType>& mt)
 	if (Size != mt.Size)
 	{
 		Size = mt.Size;
-		ValType* tmp = new ValType[Size];
+		TVector<ValType>* tmp = new TVector<ValType>[Size];
 		delete[] pVector;
 		pVector = tmp;
 	}
