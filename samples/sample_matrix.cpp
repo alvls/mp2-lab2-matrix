@@ -12,13 +12,12 @@
 void main()
 {
   TMatrix<int> a(5), b(5), c(5);
-  int i, j;
 
   setlocale(LC_ALL, "Russian");
   cout << "Тестирование программ поддержки представления треугольных матриц"
     << endl;
-  for (i = 0; i < 5; i++)
-    for (j = i; j < 5; j++ )
+  for (int i = 0; i < 5; i++)
+    for (int j = i; j < 5; j++ )
     {
       a[i][j] =  i * 10 + j;
       b[i][j] = (i * 10 + j) * 100;
@@ -27,5 +26,16 @@ void main()
   cout << "Matrix a = " << endl << a << endl;
   cout << "Matrix b = " << endl << b << endl;
   cout << "Matrix c = a + b" << endl << c << endl;
+  c = c - c - a;
+  cout << "Matrix c = c - c - a" << endl << c << endl;
+
+  a = b;
+  cout << "Копирование (a = b)" << endl << "Matrix a = " << endl << a << endl;
+  bool compare = (a == b);
+  if (compare == true)
+  cout << "Сравнение (a == b)" << endl << "TRUE" << endl;
+  compare = (a == c);
+  if (compare == false)
+      cout << "Сравнение (a == c)" << endl << "FALSE" << endl;
 }
 //---------------------------------------------------------------------------
