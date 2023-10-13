@@ -27,7 +27,7 @@ protected:
 	ValType* pVector;                                 // вектор
 	size_t Size;                                      // размер вектора
 public:
-	TVector(size_t s = 10);                           // конструктор-инициализатор
+	TVector(size_t s = 5);                            // конструктор-инициализатор
 	TVector(size_t s, ValType el);                    // конструктор-инициализатор
 	TVector(ValType arr[], size_t s);                 // конструктор-инициализатор
 	TVector(const TVector& v);                        // конструктор копирования
@@ -313,7 +313,7 @@ template <class ValType>
 class TMatrix : public TVector<TVector<ValType> >
 {
 public:
-	TMatrix(size_t s = 10);                                  // инициализация
+	TMatrix(size_t s = 5);                                   // инициализация
 	TMatrix(size_t s, ValType el);                           // инициализация
 	TMatrix(const TMatrix& mt);                              // копирование
 	TMatrix(const TVector<TVector<ValType> >& mt);           // преобразование типа
@@ -351,6 +351,8 @@ TMatrix<ValType>::TMatrix(size_t s) : TVector<TVector<ValType> >(s)
 {
 	if (s > MAX_MATRIX_SIZE)
 		throw invalid_argument("invalid size");
+	for (int i = 0; i < s; i++)
+		pVector[i] = TVector <ValType>(s);
 }
 
 template<class ValType>
