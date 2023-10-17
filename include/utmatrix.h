@@ -3,7 +3,7 @@
 // utmatrix.h - Copyright (c) Гергель В.П. 07.05.2001
 //   Переработано для Microsoft Visual Studio 2008 Сысоевым А.В. (21.04.2015)
 //
-// Верхнетреугольная матрица - реализация на основе шаблона вектора
+// Матрица - реализация на основе шаблона вектора
 
 #ifndef __TMATRIX_H__
 #define __TMATRIX_H__
@@ -117,6 +117,10 @@ TVector<ValType> &TVector<ValType>::operator=(const TVector &v) {
         delete[] pVector;
         pVector = new ValType[Size];
     }
+    for (int i = 0; i < v.Size; i++) {
+        pVector[i] = v.pVector[i];
+    }
+    return *this;
 } /*-------------------------------------------------------------------------*/
 
 template<class ValType>
