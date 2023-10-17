@@ -16,7 +16,6 @@ TEST(TVector, throws_when_create_vector_with_negative_length) {
 
 TEST(TVector, can_create_copied_vector) {
     TVector<int> v(10);
-
     ASSERT_NO_THROW(TVector<int> v1(v));
 }
 
