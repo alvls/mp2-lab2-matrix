@@ -179,7 +179,7 @@ TVector<ValType> TVector<ValType>::operator-(const ValType &val)
     return res;
 }
 
-template <class ValType> // прибавить скаляр
+template <class ValType> // вычесть скаляр
 TVector<ValType>& TVector<ValType>::operator-=(const ValType& val)
 {
     for (int i = 0; i < Size; i++)
