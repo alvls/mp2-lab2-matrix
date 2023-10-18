@@ -31,7 +31,7 @@ TEST(TVector, can_create_copied_vector)
 
 TEST(TVector, copied_vector_is_equal_to_source_one)
 {
-   TVector<int> v(5);
+   TVector<int> v(5, 2);
 
    EXPECT_EQ(v, TVector<int>(v));
 }
