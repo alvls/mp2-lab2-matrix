@@ -50,7 +50,6 @@ TEST(TVector, can_create_vector_from_array)
 TEST(TVector, can_get_size)
 {
 	TVector<int> v(4);
-
 	EXPECT_EQ(4, v.GetSize());
 }
 
@@ -59,7 +58,6 @@ TEST(TVector, can_set_and_get_element)
 {
 	TVector<int> v(4);
 	v[0] = 4;
-
 	ASSERT_NO_THROW(v[0]);
 	ASSERT_NO_THROW(v[0] = 4);
 	EXPECT_EQ(4, v[0]);
@@ -68,13 +66,13 @@ TEST(TVector, can_set_and_get_element)
 TEST(TVector, throws_when_set_element_with_negative_index)
 {
 	TVector<int> v(4);
-	ASSERT_ANY_THROW(v[-2]);
+	ASSERT_ANY_THROW(v[-2] = 3);
 }
 
 TEST(TVector, throws_when_set_element_with_too_large_index)
 {
 	TVector<int> v(4);
-	ASSERT_ANY_THROW(v[20]);;
+	ASSERT_ANY_THROW(v[20] = 12);
 }
 
 TEST(TVector, can_assign_vector_to_itself)
@@ -130,7 +128,6 @@ TEST(TVector, can_add_scalar_to_vector)
 TEST(TVector, operator_add_scalar)
 {
 	int a[] = { 1, 1, 1 }, b[] = { 2, 2, 2 };
-	
 	TVector<int> v(a, 3), res(b, 3);
 	EXPECT_EQ(v + 1, res);
 }

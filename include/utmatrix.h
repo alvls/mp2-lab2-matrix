@@ -377,7 +377,9 @@ TMatrix<ValType>::TMatrix(const TVector<TVector<ValType> >& mt) :
 template <class ValType> 
 bool TMatrix<ValType>::operator==(const TMatrix<ValType>& mt) const
 {
-	if (Size != mt.Size)
+	if (this == &mt)
+		return true;
+	else if (Size != mt.Size)
 		return false;
 	for (int i = 0; i < Size; i++)
 		if (pVector[i] != mt.pVector[i])
@@ -386,7 +388,6 @@ bool TMatrix<ValType>::operator==(const TMatrix<ValType>& mt) const
 }
 
 template <class ValType> 
-
 bool TMatrix<ValType>::operator!=(const TMatrix<ValType>& mt) const { return !(*this == mt); }
 
 template <class ValType> 
