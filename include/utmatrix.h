@@ -167,12 +167,13 @@ TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 
 template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType>& v){
+    TVector<ValType> tmp(Size);
     if (v.Size!= Size)
         throw "Diferent size";
     for (int i = 0; i < Size; i++) {
-        pVector[i] = pVector[i] + v.pVector[i];
+        tmp.pVector[i] = pVector[i] + v.pVector[i];
     }
-    return *this;
+    return tmp;
 } 
 
 template <class ValType> // вычитание
@@ -239,7 +240,8 @@ TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType> >(s)
 
 template <class ValType> // конструктор копирования
 TMatrix<ValType>::TMatrix(const TMatrix<ValType> &mt):
-  TVector<TVector<ValType> >(mt) {}
+  TVector<TVector<ValType> >(mt) {
+}
 
 template <class ValType> // конструктор преобразования типа
 TMatrix<ValType>::TMatrix(const TVector<TVector<ValType> > &mt):
@@ -273,6 +275,8 @@ bool TMatrix<ValType>::operator!=(const TMatrix<ValType> &mt) const
 template <class ValType> // присваивание
 TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType>& mt)
 {
+    TMatrix<ValType> tmp(mt);
+
     Size = mt.Size;
     for (int i = 0; i < mt.Size; i++) {
         pVector[i] = mt.pVector[i];
@@ -283,12 +287,13 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType>& mt)
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
+    TMatrix<ValType> tmp(Size);
     if (Size != mt.Size)
         throw "Different sixes";
     for (int i = 0; i < Size; i++) {
-        pVector[i] =pVector[i]+ mt.pVector[i];
+        tmp.pVector[i] = pVector[i] + mt.pVector[i];
     }
-    return *this;
+    return tmp;
 } 
 
 template <class ValType> // вычитание
