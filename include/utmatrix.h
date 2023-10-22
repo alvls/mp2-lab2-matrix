@@ -100,10 +100,6 @@ ValType& TVector<ValType>::operator[](int pos)
 template <class ValType> // сравнение
 bool TVector<ValType>::operator==(const TVector &v) const
 {
-    if (this == &v)
-    {
-        return true;
-    }
     if (Size != v.Size)
     {
         return false;
@@ -119,7 +115,7 @@ bool TVector<ValType>::operator==(const TVector &v) const
 template <class ValType> // сравнение
 bool TVector<ValType>::operator!=(const TVector &v) const
 {
-    if (*this == v)
+    if (!(*this == v))
     {
         return true;
     }
@@ -262,7 +258,7 @@ TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // конструктор копирования
-TMatrix<ValType>::TMatrix(const TMatrix<ValType>& mt) :
+TMatrix<ValType>::TMatrix(const TMatrix<ValType> &mt) :
     TVector<TVector<ValType> >(mt) {}
 
 template <class ValType> // конструктор преобразования типа
@@ -272,10 +268,7 @@ TMatrix<ValType>::TMatrix(const TVector<TVector<ValType> > &mt):
 template <class ValType> // сравнение
 bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
 {
-    if (this == &mt) 
-    {
-        return true;
-    }
+
     if (this->Size != mt.Size)
     {
         return false;
@@ -291,7 +284,7 @@ bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
 template <class ValType> // сравнение
 bool TMatrix<ValType>::operator!=(const TMatrix<ValType> &mt) const
 {
-    if (*this == mt)
+    if (!(*this == mt))
     {
         return true;
     }
