@@ -7,7 +7,7 @@
 
 #ifndef __TMATRIX_H__
 #define __TMATRIX_H__
-
+#include <iomanip>
 #include <iostream>
 
 using namespace std;
@@ -24,7 +24,7 @@ protected:
   int Size;       // размер вектора
   int StartIndex; // индекс первого элемента вектора
 public:
-  TVector(int s = 10, int si = 0);
+  TVector(int s=10 , int si = 0);
   TVector(const TVector &v);                // конструктор копирования
   ~TVector();
   int GetSize()      { return Size;       } // размер вектора
@@ -70,7 +70,8 @@ TVector<ValType>::TVector(int s, int si)
         throw "Negative startindex";
     Size = s;
     StartIndex = si;
-    pVector = new ValType[Size];
+    pVector = new ValType[Size]();
+    
 } 
 
 template <class ValType> //конструктор копирования
@@ -226,21 +227,26 @@ public:
   friend ostream & operator<<( ostream &out, const TMatrix &mt)
   {
     for (int i = 0; i < mt.Size; i++)
-      out << mt.pVector[i] << endl;
+      out <<right<<setw(8)<< mt.pVector[i] << endl;
     return out;
   }
 };
 
 template <class ValType>
-TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType> >(s)
+TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType>>(s)
 {
+    
     if (s > 10000)
         throw "Too large matrix";
+    for (int i = 0; i < s; i++) {
+        
+        pVector[i] = TVector<ValType>(Size, 0);
+    }
 } 
 
 template <class ValType> // конструктор копирования
 TMatrix<ValType>::TMatrix(const TMatrix<ValType> &mt):
-  TVector<TVector<ValType> >(mt) {
+  TVector<TVector<ValType>>(mt) {
 }
 
 template <class ValType> // конструктор преобразования типа
