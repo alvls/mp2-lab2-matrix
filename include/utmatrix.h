@@ -24,7 +24,8 @@ protected:
   int Size;       // размер вектора
   int StartIndex; // индекс первого элемента вектора
 public:
-  TVector(int s = 10, int si = 0);
+  TVector();
+  TVector(int s, int si = 0);
   TVector(const TVector &v);                // конструктор копирования
   ~TVector();
   int GetSize()      { return Size;       } // размер вектора
@@ -58,6 +59,14 @@ public:
 	return out;
   }
 };
+
+template<class ValType>
+inline TVector<ValType>::TVector()
+{
+	Size = 5;
+	StartIndex = 0;
+	pVector = new ValType[Size]();
+}
 
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
