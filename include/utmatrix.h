@@ -24,8 +24,7 @@ protected:
   int Size;       // размер вектора
   int StartIndex; // индекс первого элемента вектора
 public:
-  TVector();
-  TVector(int s, int si = 0);
+  TVector(int s = 5);
   TVector(const TVector &v);                // конструктор копирования
   ~TVector();
   int GetSize()      { return Size;       } // размер вектора
@@ -60,24 +59,16 @@ public:
   }
 };
 
-template<class ValType>
-inline TVector<ValType>::TVector()
-{
-	Size = 5;
-	StartIndex = 0;
-	pVector = new ValType[Size]();
-}
-
 template <class ValType>
-TVector<ValType>::TVector(int s, int si)
+TVector<ValType>::TVector(int s)
 {
 	if (s < 0 || s > MAX_VECTOR_SIZE)
 		throw "Negative Size";
-	if (si < 0)
-		throw "negative ind";
 	Size = s;
-	StartIndex = si;
-	pVector = new ValType[Size]();
+	StartIndex = 0;
+	pVector = new ValType[Size];
+	for (int i = 0; i < Size; i++)
+		pVector[i] = 0;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> //конструктор копирования
@@ -87,7 +78,7 @@ TVector<ValType>::TVector(const TVector<ValType> &v)
 	Size = v.Size;
 	StartIndex = v.StartIndex;
 	delete[] pVector;
-	pVector = new ValType[Size]();
+	pVector = new ValType[Size];
 	for (int i = 0; i < Size; i++)
 		pVector[i] = v.pVector[i];
 	//memcpy(pVector, v.pVector, Size);
@@ -205,7 +196,7 @@ template <class ValType>
 class TMatrix : public TVector<TVector<ValType> >
 {
 public:
-  TMatrix(int s = 10);                           
+  TMatrix(int s);                           
   TMatrix(const TMatrix &mt);                    // копирование
   TMatrix(const TVector<TVector<ValType> > &mt); // преобразование типа
   bool operator==(const TMatrix &mt) const;      // сравнение
@@ -230,9 +221,12 @@ public:
 };
 
 template <class ValType>
-TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
+TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType>>(s)
 {
 	if (s > MAX_MATRIX_SIZE || s < 0) throw "Incorrect size";
+	for (int i = 0; i < s; i++) {
+		this->pVector[i] = TVector<ValType>(s);
+	}
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // конструктор копирования
