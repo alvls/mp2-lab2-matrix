@@ -1,0 +1,7 @@
+C:/Users/prive/Desktop/lab/Kulikov-lab2-matrix/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/prive/Desktop/lab/Kulikov-lab2-matrix/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/prive/Desktop/lab/Kulikov-lab2-matrix/out/build/x64-Debug/include/CMakeFiles/edit_cache.dir
+C:/Users/prive/Desktop/lab/Kulikov-lab2-matrix/out/build/x64-Debug/include/CMakeFiles/rebuild_cache.dir
+C:/Users/prive/Desktop/lab/Kulikov-lab2-matrix/out/build/x64-Debug/samples/CMakeFiles/samples.dir
+C:/Users/prive/Desktop/lab/Kulikov-lab2-matrix/out/build/x64-Debug/samples/CMakeFiles/edit_cache.dir
+C:/Users/prive/Desktop/lab/Kulikov-lab2-matrix/out/build/x64-Debug/samples/CMakeFiles/rebuild_cache.dir
