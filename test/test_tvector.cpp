@@ -20,18 +20,29 @@ TEST(TDynamicVector, throws_when_create_vector_with_negative_length)
 TEST(TDynamicVector, can_create_copied_vector)
 {
   TDynamicVector<int> v(10);
-
-  ASSERT_NO_THROW(TDynamicVector<int> v1(v));
+    ASSERT_NO_THROW(TDynamicVector<int> v1(v));
 }
 
 TEST(TDynamicVector, copied_vector_is_equal_to_source_one)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5);
+	for (int i = 0; i < 5; i++) {
+		v[i] = i;
+	}
+	TDynamicVector<int> v1(v);
+	EXPECT_TRUE(v == v1);
 }
 
 TEST(TDynamicVector, copied_vector_has_its_own_memory)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5);
+	for (int i = 0; i < 5; i++) {
+		v[i] = i;
+	}
+	TDynamicVector<int> v1(v), old(5);
+	old = v1;
+	v[0] = 10;
+	EXPECT_TRUE(v1 == old);
 }
 
 TEST(TDynamicVector, can_get_size)
@@ -41,101 +52,183 @@ TEST(TDynamicVector, can_get_size)
   EXPECT_EQ(4, v.size());
 }
 
-//TEST(TDynamicVector, can_set_and_get_element)
-//{
-//  TDynamicVector<int> v(4);
-//  v[0] = 4;
-//
-//  EXPECT_EQ(4, v[0]);
-//}
+TEST(TDynamicVector, can_set_and_get_element)
+{
+	TDynamicVector<int> v(4);
+	v[0] = 4;
+	EXPECT_EQ(4, v[0]);
+}
 
 TEST(TDynamicVector, throws_when_set_element_with_negative_index)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(4);
+	EXPECT_THROW(v.at(-1), out_of_range);
 }
 
 TEST(TDynamicVector, throws_when_set_element_with_too_large_index)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(4);
+	ASSERT_THROW(v.at(4), out_of_range);
+	ASSERT_THROW(v.at(50), out_of_range);
 }
 
 TEST(TDynamicVector, can_assign_vector_to_itself)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5);
+	for (int i = 0; i < 5; i++) {
+		v[i] = i;
+	}
+	TDynamicVector<int> v1(v);
+	v = v;
+	EXPECT_TRUE(v == v1);
 }
 
 TEST(TDynamicVector, can_assign_vectors_of_equal_size)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5), v1(5);
+	for (int i = 0; i < 5; i++) {
+		v[i] = i;
+	}
+	v1 = v;
+	ASSERT_TRUE(v == v1);
 }
 
 TEST(TDynamicVector, assign_operator_change_vector_size)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5), v1(3);
+	for (int i = 0; i < 5; i++) {
+		v[i] = i;
+	}
+	v1 = v;
+	ASSERT_TRUE(v1.size() == 5);
 }
+
 
 TEST(TDynamicVector, can_assign_vectors_of_different_size)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5), v1(3);
+	ASSERT_NO_THROW(v = v1);
 }
 
 TEST(TDynamicVector, compare_equal_vectors_return_true)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5), v1(5);
+	for (int i = 0; i < 5; i++) {
+		v[i] = i;
+		v1[i] = i;
+	}
+	ASSERT_TRUE(v == v1);
 }
 
 TEST(TDynamicVector, compare_vector_with_itself_return_true)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5);
+	ASSERT_TRUE(v == v);
 }
 
 TEST(TDynamicVector, vectors_with_different_size_are_not_equal)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5), v1(3);
+	ASSERT_FALSE(v == v1);
 }
 
 TEST(TDynamicVector, can_add_scalar_to_vector)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5), v1(5);
+	int a = 3;
+	for (int i = 0; i < 5; i++) {
+		v[i] = i;
+	}
+	v1 = v + a;
+	for (int i = 0; i < 5; i++) {
+		ASSERT_EQ(v[i] + a, v1[i]);
+	}
 }
 
 TEST(TDynamicVector, can_subtract_scalar_from_vector)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5), v1(5);
+	int a = 3;
+	for (int i = 0; i < 5; i++) {
+		v[i] = 10 * i;
+	}
+	v1 = v - a;
+	for (int i = 0; i < 5; i++) {
+		ASSERT_EQ(v[i] - a, v1[i]);
+	}
 }
 
 TEST(TDynamicVector, can_multiply_scalar_by_vector)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5), v1(5);
+	int a = 5;
+	for (int i = 0; i < 5; i++) {
+		v[i] = 10 * i;
+	}
+	v1 = v * a;
+	for (int i = 0; i < 5; i++) {
+		ASSERT_EQ(v[i] * a, v1[i]);
+	}
 }
 
 TEST(TDynamicVector, can_add_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5), v1(5), v2(5);
+	for (int i = 0; i < 5; i++) {
+		v[i] = 10 * i;
+		v1[i] = 5 * i;
+	}
+	v2 = v + v1;
+	for (int i = 0; i < 5; i++) {
+		ASSERT_EQ(v[i] + v1[i], v2[i]);
+	}
+
 }
 
 TEST(TDynamicVector, cant_add_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(3), v1(5);
+	ASSERT_ANY_THROW(v + v1);
 }
 
 TEST(TDynamicVector, can_subtract_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5), v1(5), v2(5);
+	for (int i = 0; i < 5; i++) {
+		v[i] = 10 * i;
+		v1[i] = 5 * i;
+	}
+	v2 = v - v1;
+	for (int i = 0; i < 5; i++) {
+		ASSERT_EQ(v[i] - v1[i], v2[i]);
+	}
 }
 
 TEST(TDynamicVector, cant_subtract_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(3), v1(5);
+	ASSERT_ANY_THROW(v - v1);
 }
 
 TEST(TDynamicVector, can_multiply_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5), v1(5);
+	int a = 0, sum = 0;
+	for (int i = 0; i < 5; i++) {
+		v[i] = 10 * i;
+		v1[i] = 5 * i;
+	}
+	a = v * v1;
+	for (int i = 0; i < 5; i++) {
+		sum += v[i] * v1[i];
+	}
+	ASSERT_EQ(a, sum);
+
 }
 
 TEST(TDynamicVector, cant_multiply_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(5), v1(3);
+	ASSERT_ANY_THROW(v * v1);
 }
 
