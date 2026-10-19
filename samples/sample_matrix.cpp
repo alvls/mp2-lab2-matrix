@@ -8,23 +8,77 @@
 #include "tmatrix.h"
 //---------------------------------------------------------------------------
 
-void main()
+int main()
 {
-  TDynamicMatrix<int> a(5), b(5), c(5);
-  int i, j;
+  size_t n;
+  cout << "Введите размер матриц: ";
+  cin >> n;
 
-  setlocale(LC_ALL, "Russian");
-  cout << "Тестирование класс работы с матрицами"
-    << endl;
-  for (i = 0; i < 5; i++)
-    for (j = i; j < 5; j++ )
+  TDynamicMatrix<int> a(n), b(n), c(n);
+
+  cout << "Введите матрицу a (" << n << "x" << n << "):" << endl;
+  cin >> a;
+  cout << "Введите матрицу b (" << n << "x" << n << "):" << endl;
+  cin >> b;
+
+  int choice;
+  do
+  {
+    cout << "\nВыберите операцию:" << endl;
+    cout << "1 - a + b" << endl;
+    cout << "2 - a - b" << endl;
+    cout << "3 - a * b (матричное)" << endl;
+    cout << "4 - a * scalar" << endl;
+    cout << "5 - a * vector" << endl;
+    cout << "6 - вывести a и b" << endl;
+    cout << "0 - выход" << endl;
+    cout << "> ";
+    cin >> choice;
+
+    switch (choice)
     {
-      a[i][j] =  i * 10 + j;
-      b[i][j] = (i * 10 + j) * 100;
+    case 1:
+      c = a + b;
+      cout << "a + b =" << endl << c;
+      break;
+    case 2:
+      c = a - b;
+      cout << "a - b =" << endl << c;
+      break;
+    case 3:
+      c = a * b;
+      cout << "a * b =" << endl << c;
+      break;
+    case 4:
+    {
+      int s;
+      cout << "Введите скаляр: ";
+      cin >> s;
+      c = a * s;
+      cout << "a * " << s << " =" << endl << c;
+      break;
     }
-  c = a + b;
-  cout << "Matrix a = " << endl << a << endl;
-  cout << "Matrix b = " << endl << b << endl;
-  cout << "Matrix c = a + b" << endl << c << endl;
+    case 5:
+    {
+      TDynamicVector<int> v(n);
+      cout << "Введите вектор (" << n << " элементов): ";
+      cin >> v;
+      TDynamicVector<int> r = a * v;
+      cout << "a * v = " << r << endl;
+      break;
+    }
+    case 6:
+      cout << "a =" << endl << a;
+      cout << "b =" << endl << b;
+      break;
+    case 0:
+      cout << "Выход." << endl;
+      break;
+    default:
+      cout << "Неверный выбор." << endl;
+    }
+  } while (choice != 0);
+
+  return 0;
 }
 //---------------------------------------------------------------------------
