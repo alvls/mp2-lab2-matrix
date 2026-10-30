@@ -80,7 +80,6 @@ public:
   // индексация
   T& operator[](size_t ind)
   {
-      if (ind >= sz) throw std::out_of_range("Index out of range");
       return pMem[ind];
   }
   const T& operator[](size_t ind) const
@@ -208,6 +207,11 @@ public:
   }
 
   using TDynamicVector<TDynamicVector<T>>::operator[];
+  TDynamicVector<T>& at(size_t ind)
+  {
+      if (ind >= sz) throw std::out_of_range("Matrix index out of range");
+      return pMem[ind];
+  }
   size_t size() const noexcept { return sz; }
   // сравнение
   bool operator==(const TDynamicMatrix& m) const noexcept
@@ -292,7 +296,7 @@ public:
   friend ostream& operator<<(ostream& ostr, const TDynamicMatrix& v)
   {
       for (size_t i = 0; i < v.sz; i++) {
-          ostr << v.pMem[i] << " ";
+          ostr << v.pMem[i] << "\n ";
       }
       return ostr;
   }

@@ -57,13 +57,13 @@ TEST(TDynamicMatrix, can_set_and_get_element)
 TEST(TDynamicMatrix, throws_when_set_element_with_negative_index)
 {
     TDynamicMatrix<int> m(3);
-    ASSERT_ANY_THROW(m[(size_t)-1][0] = 10);
+    ASSERT_ANY_THROW(m.at((size_t)-1));
 }
 
 TEST(TDynamicMatrix, throws_when_set_element_with_too_large_index)
 {
     TDynamicMatrix<int> m(3);
-    ASSERT_ANY_THROW(m[3][0] = 10);
+    ASSERT_ANY_THROW(m.at(3));
 }
 
 TEST(TDynamicMatrix, can_assign_matrix_to_itself)
