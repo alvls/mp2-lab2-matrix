@@ -38,20 +38,27 @@ public:
         pMem = new T[sz];
         std::copy(arr, arr + sz, pMem);
     }
-    TDynamicVector(const TDynamicVector& v)
+   TDynamicVector(const TDynamicVector& v)
     {
         sz = v.sz;
         pMem = new T[sz];
         std::copy(v.pMem, v.pMem + sz, pMem);
     }
-    TDynamicVector(TDynamicVector&& v) noexcept
+    
+    TDynamicVector& operator=(const TDynamicVector& v)
     {
-        sz = v.sz;
-        pMem = v.pMem;
-        v.sz = 0;
-        v.pMem = nullptr;
+        if (this != &v) {
+            TDynamicVector tmp(v); 
+            swap(*this, tmp);      
+        }
+        return *this;
     }
+    
     ~TDynamicVector()
+    {
+        delete[] pMem;
+    }
+ ~TDynamicVector()
     {
         delete[] pMem;
     }

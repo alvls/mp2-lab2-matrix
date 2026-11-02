@@ -1,32 +1,37 @@
-﻿// ННГУ, ИИТММ, Курс "Алгоритмы и структуры данных"
-//
-// Copyright (c) Сысоев А.В.
-//
-// Тестирование матриц
-
-#include <iostream>
+﻿#include <iostream>
 #include "tmatrix.h"
 
-int main() 
+using namespace std;
+
+int main()
 {
-    TDynamicMatrix<int> a(5), b(5), c(5);
-    int i, j;
-
-    setlocale(LC_ALL, "Russian"); 
-    cout << "Тестирование класс работы с матрицами" << endl;
+    setlocale(LC_ALL, "Russian");
     
-    for (i = 0; i < 5; i++)
-        for (j = i; j < 5; j++)
-        {
-            a[i][j] = i * 10 + j;
-            b[i][j] = (i * 10 + j) * 100;
-        }
+    int n;
+    cout << "Введите размерность матриц (N x N): ";
+    if (!(cin >> n) || n <= 0) {
+        cout << "Некорректная размерность." << endl;
+        return 1;
+    }
 
-    c = a + b;
+    TDynamicMatrix<int> a(n), b(n);
     
-    cout << "Matrix a = " << endl << a << endl;
-    cout << "Matrix b = " << endl << b << endl;
-    cout << "Matrix c = a + b" << endl << c << endl;
+    cout << "Введите элементы первой матрицы (" << n * n << " чисел):" << endl;
+    cin >> a;
+    
+    cout << "Введите элементы второй матрицы (" << n * n << " чисел):" << endl;
+    cin >> b;
+
+    cout << "\nМатрица A:" << endl << a;
+    cout << "\nМатрица B:" << endl << b;
+
+    try {
+        cout << "\nA + B:" << endl << (a + b);
+        cout << "\nA - B:" << endl << (a - b);
+        cout << "\nA * B:" << endl << (a * b);
+    } catch (const exception& e) {
+        cout << "Ошибка при выполнении операций: " << e.what() << endl;
+    }
 
     return 0;
 }
