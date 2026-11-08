@@ -201,6 +201,7 @@ public:
   }
 
   using TDynamicVector<TDynamicVector<T>>::operator[];
+  size_t size() const noexcept { return sz; }
 
   // сравнение
   bool operator==(const TDynamicMatrix& m) const noexcept
