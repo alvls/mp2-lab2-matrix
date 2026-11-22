@@ -8,23 +8,121 @@
 #include "tmatrix.h"
 //---------------------------------------------------------------------------
 
+TDynamicMatrix<int> InputMatrix() {
+    size_t size;
+    cout << "Введите длину стороны матрицы\n";
+    cin >> size;
+
+    TDynamicMatrix<int> result(size);
+    cout << "Введите n * n элементов (слева направо, сверху вниз):\n";
+    cin >> result;
+
+    return result;
+}
+TDynamicVector<int> InputVector() {
+    size_t size;
+    cout << "Введите длину вектора\n";
+    cin >> size;
+
+    TDynamicVector<int> result(size);
+    cout << "Введите n элементов:\n";
+    cin >> result;
+
+    return result;
+}
+
+void Menu() {
+    cout << "0 - выход\n"
+        << "1 - задать основную матрицу (начните с этого)\n"
+        << "2 - сравнить матрицы\n"
+        << "3 - сложить со скаляром\n"
+        << "4 - вычесть скаляр\n"
+        << "5 - умножить на скаляр\n"
+        << "6 - сложить матрицы\n"
+        << "7 - вычесть матрицы\n"
+        << "8 - перемножить матрицы\n"
+        << "9 - умножить матрицу на вектор\n";
+}
+
 void main()
 {
-  TDynamicMatrix<int> a(5), b(5), c(5);
-  int i, j;
-
   setlocale(LC_ALL, "Russian");
-  cout << "Тестирование класс работы с матрицами"
-    << endl;
-  for (i = 0; i < 5; i++)
-    for (j = i; j < 5; j++ )
-    {
-      a[i][j] =  i * 10 + j;
-      b[i][j] = (i * 10 + j) * 100;
+
+  TDynamicMatrix<int> m;
+
+  while (true) {
+    Menu();
+    int flag;
+    cin >> flag;
+
+    switch (flag) {
+    case 0: {
+        return;
     }
-  c = a + b;
-  cout << "Matrix a = " << endl << a << endl;
-  cout << "Matrix b = " << endl << b << endl;
-  cout << "Matrix c = a + b" << endl << c << endl;
+    case 1: {
+        m = InputMatrix();
+        cout << "Матрица изменена\n";
+        break;
+    }
+    case 2: {
+        TDynamicMatrix<int> m1 = InputMatrix();
+
+        cout << "A == B = " << (m == m1) << endl;
+        break;
+    }
+    case 3: {
+        int val;
+        cout << "Введите скаляр:\n";
+        cin >> val;
+
+        cout << "A + " << val << " =\n" << (m + val) << endl;
+        break;
+    }
+    case 4: {
+        int val;
+        cout << "Введите скаляр:\n";
+        cin >> val;
+
+        cout << "A - " << val << " =\n" << (m - val) << endl;
+        break;
+    }
+    case 5: {
+        int val;
+        cout << "Введите скаляр:\n";
+        cin >> val;
+
+        cout << "A * " << val << " =\n" << (m * val) << endl;
+        break;
+    }
+    case 6: {
+        TDynamicMatrix<int> m1 = InputMatrix();
+
+        cout << "A + B =\n" << (m + m1) << endl;
+        break;
+    }
+    case 7: {
+        TDynamicMatrix<int> m1 = InputMatrix();
+
+        cout << "A - B =\n" << (m - m1) << endl;
+        break;
+    }
+    case 8: {
+        TDynamicMatrix<int> m1 = InputMatrix();
+
+        cout << "A * B =\n" << (m * m1) << endl;
+        break;
+    }
+    case 9: {
+        TDynamicVector<int> m1 = InputVector();
+
+        cout << "A * b =\n" << (m * m1) << endl;
+        break;
+    }
+    default: {
+        break;
+    }
+    }
+  }
+
 }
 //---------------------------------------------------------------------------
